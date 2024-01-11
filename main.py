@@ -107,6 +107,9 @@ class Game:
             pygame.draw.rect(self.screen, "gray", [0, 800, self.SCREEN_SIZE[0], 100])
             pygame.draw.rect(self.screen, "gold", [0, 800, self.SCREEN_SIZE[0], 100], 5)
             pygame.draw.rect(self.screen, "gold", [800, 0, 200, self.SCREEN_SIZE[1]], 5)
+            self.status_text = ["white: select a piece to move", "white: select a destination",
+                                "black: select a piece to move", "black: select a destination"]
+            self.screen.blit(self.big_font.render(self.status_text[self.turn_step], True, "black"), (50, 820))
 
     def start(self):
         while self.run:
