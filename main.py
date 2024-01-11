@@ -3,9 +3,9 @@ import pygame
 class Game:
     def __init__(self):    
         pygame.init()
-        SCREEN_SIZE = (1000, 900)
+        self.SCREEN_SIZE = (1000, 900)
         self.FPS = 60
-        self.screen = pygame.display.set_mode(SCREEN_SIZE)
+        self.screen = pygame.display.set_mode(self.SCREEN_SIZE)
         pygame.display.set_caption("chess")
         self.font = pygame.font.Font("freesansbold.ttf", 20)
         self.big_font = pygame.font.Font("freesansbold.ttf", 50)
@@ -54,8 +54,10 @@ class Game:
         self.black_knight_small = pygame.transform.scale(self.black_knight, (45, 45))
 
         self.black_pawn = pygame.image.load("pieces/PNGs/No shadow/1x/b_pawn_1x_ns.png")
-        self.black_pawn = pygame.transform.scale(self.black_pawn, (65, 65))
+        self.black_pawn = pygame.transform.scale(self.black_pawn, (80, 80))
         self.black_pawn_small = pygame.transform.scale(self.black_pawn, (45, 45))
+
+        #black pieces
 
         self.white_queen = pygame.image.load("pieces/PNGs/No shadow/1x/w_queen_1x_ns.png")
         self.white_queen = pygame.transform.scale(self.black_queen, (80, 80))
@@ -78,19 +80,44 @@ class Game:
         self.white_knight_small = pygame.transform.scale(self.black_knight, (45, 45))
 
         self.white_pawn = pygame.image.load("pieces/PNGs/No shadow/1x/w_pawn_1x_ns.png")
-        self.white_pawn = pygame.transform.scale(self.black_pawn, (65, 65))
+        self.white_pawn = pygame.transform.scale(self.black_pawn, (80, 80))
         self.white_pawn_small = pygame.transform.scale(self.black_pawn, (45, 45))
+
+        self.white_images = [self.white_pawn, self.white_queen, self.white_king, self.white_knight, self.white_rook, self.white_bishop]
+        self.white_images_small = [self.white_pawn_small, self.white_queen_small, self.white_king_small, self.white_knight_small, self.white_rook_small, self.white_bishop_small]
+        
+        self.black_images = [self.black_pawn, self.black_queen, self.black_king, self.black_knight, self.black_rook, self.black_bishop]
+        self.black_images_small = [self.black_pawn_small, self.black_queen_small, self.black_king_small, self.black_knight_small, self.black_rook_small, self.black_bishop_small]
+        
+        self.piece_list = ["pawn", "queen", "king", "knight", "rook", "bishop"]
+        #check varaibles
 
         self.run = True
     
+    def draw_board(self):
+        for i in range(32):
+            self.collumn = i % 4
+            self.row = i // 4
+
+            if self.row % 2 == 0:
+                pygame.draw.rect(self.screen, "light gray", [600 - (self.collumn * 200), self.row * 100, 100, 100])
+            else:
+                pygame.draw.rect(self.screen, "light gray", [700 - (self.collumn * 200), self.row * 100, 100, 100])
+
+            pygame.draw.rect(self.screen, "gray", [0, 800, self.SCREEN_SIZE[0], 100])
+            pygame.draw.rect(self.screen, "gold", [0, 800, self.SCREEN_SIZE[0], 100], 5)
+            pygame.draw.rect(self.screen, "gold", [800, 0, 200, self.SCREEN_SIZE[1]], 5)
+
     def start(self):
         while self.run:
-            self.clock.tick(self.FPS)
-            self.screen.fill("dark gray")
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
+
+            self.clock.tick(self.FPS)
+            self.screen.fill("dark gray")
+
+            self.draw_board()
 
             pygame.display.flip()
 
